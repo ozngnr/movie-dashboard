@@ -2,6 +2,8 @@ import type { Metadata } from 'next';
 import '@/styles/globals.css';
 import { Inter } from 'next/font/google';
 import Nav from '@/components/Nav';
+import Header from '@/components/Header';
+import SearchBar from '@/components/SearchBar';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -17,12 +19,15 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={inter.className + ' overscroll-none'}>
         <div className="md:flex">
-          <Nav />
-          <main className="grow md:border md:border-solid md:border-red-700 h-[200vh]">
+          <Header />
+          <main className="grow border border-solid border-green-400 h-[200vh]">
             {children}
           </main>
+          <div className="hidden lg:block sticky top-0 w-[300px] h-screen border-l border-solid border-blue-600">
+            <SearchBar />
+          </div>
         </div>
       </body>
     </html>
