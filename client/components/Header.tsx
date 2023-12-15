@@ -1,34 +1,37 @@
 'use client';
 
-import { Bars3Icon, UserIcon } from '@heroicons/react/24/outline';
+import { useEffect, useState } from 'react';
+import { Bars3Icon, UserCircleIcon } from '@heroicons/react/24/outline';
 import SearchBar from './SearchBar';
-import Nav from './Nav';
-import { useState } from 'react';
+import Drawer from './Drawer';
+import { usePathname } from 'next/navigation';
 
-const Header = () => {
+const Header: React.FC = () => {
+  const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
 
+  useEffect(() => {
+    setIsOpen(false);
+  }, [setIsOpen, pathname]);
+
   return (
-    <>
-      {/* Navigation */}
-      <Nav isOpen={isOpen} setIsOpen={setIsOpen} />
+    <header
+      className={`flex-between sticky top-0 inset-x-0 h-[var(--header-height)] px-5 `}
+    >
+      {/* Mobile Navigation */}
+      {/* <MobileNav isOpen={isOpen} setIsOpen={setIsOpen} /> */}
+      <Drawer open={isOpen} setOpen={setIsOpen} />
 
-      <div className="w-screen fixed top-0 inset-x-0 flex h-20 px-5 justify-between lg:justify-end items-center border border-solid border-orange-600">
-        <button
-          type="button"
-          className="lg:hidden"
-          onClick={() => setIsOpen(true)}
-        >
-          <Bars3Icon width={30} />
-        </button>
+      <button type="button" onClick={() => setIsOpen(true)}>
+        <Bars3Icon width={30} />
+      </button>
 
-        <div className="w-[75%] max-w-2xl lg:hidden">
-          <SearchBar />
-        </div>
+      <SearchBar />
 
-        <UserIcon width={24} />
-      </div>
-    </>
+      <button type="button" className="w-8">
+        <UserCircleIcon />
+      </button>
+    </header>
   );
 };
 

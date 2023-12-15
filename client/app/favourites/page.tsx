@@ -1,3 +1,3 @@
-export default function Home() {
-  return <h1>Favourites</h1>
+export default function Favourites() {
+  return <h1>Favourites</h1>;
 }

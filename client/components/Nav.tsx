@@ -1,70 +1,94 @@
 'use client';
 
-import { NavProps } from '@/types';
-import { XMarkIcon } from '@heroicons/react/24/outline';
+import { MobileNavProps } from '@/types';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
-import { useEffect } from 'react';
+import { usePathname } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import { navLists } from '@/utils/navLists';
 
-const menu = (
-  <ul>
-    <li>
-      <Link href="/">dashboard</Link>
-    </li>
-    <li>
-      <Link href="/favourites">favourites</Link>
-    </li>
-    <li>wishlist</li>
-    <li>saved</li>
-  </ul>
-);
-
-const sideVariants = {
-  open: { x: 300, transition: { duration: 0.2 } },
-  closed: { x: 0, transition: { duration: 0.2 } },
+const menu = {
+  hidden: { x: 0, transition: { duration: 0.2 } },
+  show: { x: 300, transition: { duration: 0.2 } },
 };
 
-const Nav = ({ isOpen, setIsOpen }: NavProps) => {
+const backdrop = {
+  hidden: { opacity: 0 },
+  show: { opacity: 1 },
+};
+const MobileNav = ({ isOpen, setIsOpen }: MobileNavProps) => {
   useEffect(() => {
     const handleEscape = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
         setIsOpen(false);
       }
     };
-
     window.addEventListener('keydown', handleEscape);
     return () => window.removeEventListener('keydown', handleEscape);
   }, [setIsOpen]);
 
-  return (
-    <>
-      {/* desktop side nav */}
-      <nav className="hidden lg:block sticky top-0 w-[300px] h-screen border border-solid border-red-600 z-50">
-        {menu}
-      </nav>
+  const pathname = usePathname();
+  useEffect(() => {
+    setIsOpen(false);
+  }, [setIsOpen, pathname]);
 
-      {/* mobile side nav */}
-      <nav className="lg:hidden">
-        {/* backdrop */}
-        <motion.div
-          className={`fixed inset-0 bg-slate-950/50 opacity-0 z-0 ${
-            !isOpen && 'pointer-events-none'
-          }`}
-          animate={{ opacity: isOpen ? '1' : '0' }}
-          onTap={() => setIsOpen(false)}
-        />
-        <motion.div
-          className={`fixed bg-slate-900 inset-y-0 right-full w-[300px] p-5 z-10`}
-          animate={isOpen ? 'open' : 'closed'}
-          variants={sideVariants}
-        >
-          <button onClick={() => setIsOpen(false)} className="float-right">
-            <XMarkIcon width={20} />
-          </button>
-          {menu}
-        </motion.div>
-      </nav>
-    </>
+  return (
+    <div className="fixed z-[100] lg:hidden">
+      {/* backdrop */}
+      <motion.div
+        className={`fixed inset-0 bg-neutral-950/50 opacity-0 z-9 ${
+          !isOpen && 'pointer-events-none'
+        }`}
+        animate={isOpen ? 'show' : 'hidden'}
+        variants={backdrop}
+        onTap={() => setIsOpen(false)}
+      />
+      <motion.nav
+        className={`fixed bg-neutral-950 inset-y-0 right-full w-[300px] p-5 z-10`}
+        animate={isOpen ? 'show' : 'hidden'}
+        variants={menu}
+      >
+        <Nav />
+      </motion.nav>
+    </div>
+  );
+};
+
+const Nav = () => {
+  const [activeTab, setActiveTab] = useState('/');
+
+  return (
+    <nav className={``}>
+      {navLists.map((list) => (
+        <ul key={list.name} className="mb-4">
+          <span className="inline-block mb-4 uppercase text-xs">
+            {list.name}
+          </span>
+          {list.items.map((item) => (
+            <li
+              key={item.name}
+              className={`
+                ${activeTab === item.href && 'text-lightPrimary'} 
+                hover:text-accent 
+                transition-colors mb-5
+                border-r-2
+                border-accent
+              `}
+            >
+              <Link
+                href={item.href}
+                className="flex items-center"
+                onClick={() => setActiveTab(item.href)}
+              >
+                <div className="w-5 mr-4">{item.icon}</div>
+                {item.name}
+              </Link>
+            </li>
+          ))}
+          <hr className="border-lightSecondary opacity-20" />
+        </ul>
+      ))}
+    </nav>
   );
 };
 
