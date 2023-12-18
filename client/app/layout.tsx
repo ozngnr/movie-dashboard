@@ -5,7 +5,10 @@ import { Raleway } from 'next/font/google';
 import Header from '@/components/Header';
 import SideBar from '@/components/SideBar';
 import StyledComponentsRegistry from '@/lib/AntdRegistry';
-import Nav from '@/components/Nav';
+import Navbar from '@/components/Navbar';
+import { DrawerContextProvider } from '@/context/drawerContext';
+import Drawer from '@/components/Drawer';
+import Miniguide from '@/components/Miniguide';
 
 const raleway = Raleway({ subsets: ['latin'] });
 
@@ -22,18 +25,24 @@ export default function RootLayout({
     <html lang="en">
       <body className={raleway.className + ' overscroll-none'}>
         <StyledComponentsRegistry>
-          <Header />
-          <div className="flex mt-[calc(h-20)]">
-            <SideBar position="left">
-              <Nav />
-            </SideBar>
-            <div className="grow lg:mx-[calc(var(--sidebar-width))] transition-[margin]">
-              {children}
+          <DrawerContextProvider>
+            <Header />
+            <div className="flex mt-[calc(h-20)]">
+              <SideBar position="left">
+                <Navbar />
+              </SideBar>
+              <div className="grow lg:mx-[calc(var(--sidebar-width))] transition-[margin]">
+                {children}
+              </div>
+              <SideBar position="right">
+                <div>Side bar</div>
+              </SideBar>
             </div>
-            <SideBar position="right">
-              <div>Side bar</div>
-            </SideBar>
-          </div>
+            <Drawer>
+              <Navbar />
+            </Drawer>
+            <Miniguide />
+          </DrawerContextProvider>
         </StyledComponentsRegistry>
       </body>
     </html>

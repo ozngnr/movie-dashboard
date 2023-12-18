@@ -1,11 +1,6 @@
 import { SideBarProps } from '@/types';
 
 const SideBar = ({ children, position }: SideBarProps) => {
-  // const posClasses =
-  //   position === 'left'
-  //     ? '-left-[var(--sidebar-width)] lg:left-0'
-  //     : '-right-[var(--sidebar-width)] lg:right-0';
-
   const posClasses = () => {
     return `-${position}-[var(--sidebar-width)] lg:${position}-0`;
   };
@@ -20,10 +15,9 @@ const SideBar = ({ children, position }: SideBarProps) => {
         ${posClasses()}
         transition-all
         bg-darkPrimary
-        -z-10
       `}
     >
-      <div className="p-5">{children}</div>
+      <div className="">{children}</div>
     </aside>
   );
 };

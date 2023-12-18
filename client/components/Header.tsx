@@ -1,14 +1,24 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Bars3Icon, UserCircleIcon } from '@heroicons/react/24/outline';
 import SearchBar from './SearchBar';
 import Drawer from './Drawer';
 import { usePathname } from 'next/navigation';
+import { useDrawerContext } from '@/context/drawerContext';
+import Logo from './Logo';
+import useScreenSize from '@/hooks/useScreenSize';
 
 const Header: React.FC = () => {
   const pathname = usePathname();
-  const [isOpen, setIsOpen] = useState(false);
+  const { isOpen, setIsOpen } = useDrawerContext();
+  const { width } = useScreenSize();
+
+  console.log(width);
+
+  const handleNavigation = () => {
+    return width > 1024 ? console.log('open mini guide') : setIsOpen(true);
+  };
 
   useEffect(() => {
     setIsOpen(false);
@@ -20,11 +30,14 @@ const Header: React.FC = () => {
     >
       {/* Mobile Navigation */}
       {/* <MobileNav isOpen={isOpen} setIsOpen={setIsOpen} /> */}
-      <Drawer open={isOpen} setOpen={setIsOpen} />
+      {/* <Drawer open={isOpen} setOpen={setIsOpen} /> */}
 
-      <button type="button" onClick={() => setIsOpen(true)}>
-        <Bars3Icon width={30} />
-      </button>
+      <div className="flex">
+        <button className="mr-3" type="button" onClick={handleNavigation}>
+          <Bars3Icon width={30} />
+        </button>
+        <Logo />
+      </div>
 
       <SearchBar />
 
