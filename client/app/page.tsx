@@ -1,7 +1,11 @@
+import PopularMovies from './movies/PopularMovies';
+import UpcomingMovies from './movies/UpcomingMovies';
+
 export default function Home() {
   return (
-    <div className="flex min-h-screen flex-col items-center justify-between p-24">
-      Movie Dashboard - Home Page
+    <div className="min-h-screen px-5 py-3">
+      <PopularMovies />
+      <UpcomingMovies />
     </div>
   );
 }

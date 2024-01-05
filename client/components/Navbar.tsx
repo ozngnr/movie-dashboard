@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { navLists } from '@/utils/navLists';
+import { navLists } from '@/lib/navLists';
 import { usePathname } from 'next/navigation';
 
 const Navbar = () => {

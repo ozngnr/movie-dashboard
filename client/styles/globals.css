@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 :root {
-  --header-height: 56px;
+  --header-height: 64px;
   --sidebar-width: 240px;
   --mini-guide-width: 72px;
 }
@@ -49,4 +49,11 @@ h4 {
 }
 .flex-column-between {
   @apply: flex flex-col justify-between items-center;
+}
+
+/* remove slick carousel arrows */
+
+.slick-prev::before,
+.slick-next::before {
+  display: none;
 }

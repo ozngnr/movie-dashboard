@@ -1,16 +1,13 @@
-import {
-  MagnifyingGlassCircleIcon,
-  MagnifyingGlassIcon,
-} from '@heroicons/react/24/outline';
+import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 
 const SearchBar = () => {
   return (
-    <div className="relative text-gray-600">
+    <div className={`relative text-lightSecondary w-full`}>
       <input
         type="text"
         name="serch"
         placeholder="Search"
-        className="bg-white w-full h-10 px-5 pr-10 rounded-xl text-sm focus:outline-none"
+        className="bg-darkPrimary w-full h-10 px-5 pr-10 rounded-xl text-sm focus:outline-none"
       />
       <button
         type="submit"

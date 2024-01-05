@@ -2,13 +2,8 @@ import type { Metadata } from 'next';
 import '@/styles/globals.css';
 import { Raleway } from 'next/font/google';
 
-import Header from '@/components/Header';
-import SideBar from '@/components/SideBar';
-import StyledComponentsRegistry from '@/lib/AntdRegistry';
-import Navbar from '@/components/Navbar';
-import { DrawerContextProvider } from '@/context/drawerContext';
-import Drawer from '@/components/Drawer';
-import Miniguide from '@/components/Miniguide';
+import { NavContextProvider } from '@/context/navContext';
+import Layout from '@/components/Layout';
 
 const raleway = Raleway({ subsets: ['latin'] });
 
@@ -23,27 +18,23 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <head>
+        <link
+          rel="stylesheet"
+          type="text/css"
+          charSet="UTF-8"
+          href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css"
+        />
+        <link
+          rel="stylesheet"
+          type="text/css"
+          href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css"
+        />
+      </head>
       <body className={raleway.className + ' overscroll-none'}>
-        <StyledComponentsRegistry>
-          <DrawerContextProvider>
-            <Header />
-            <div className="flex mt-[calc(h-20)]">
-              <SideBar position="left">
-                <Navbar />
-              </SideBar>
-              <div className="grow lg:mx-[calc(var(--sidebar-width))] transition-[margin]">
-                {children}
-              </div>
-              <SideBar position="right">
-                <div>Side bar</div>
-              </SideBar>
-            </div>
-            <Drawer>
-              <Navbar />
-            </Drawer>
-            <Miniguide />
-          </DrawerContextProvider>
-        </StyledComponentsRegistry>
+        <NavContextProvider>
+          <Layout>{children}</Layout>
+        </NavContextProvider>
       </body>
     </html>
   );

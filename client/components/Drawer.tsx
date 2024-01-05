@@ -1,20 +1,20 @@
 'use client';
 
 import { motion, AnimatePresence } from 'framer-motion';
-import { useDrawerContext } from '@/context/drawerContext';
+import { useNavContext } from '@/context/navContext';
 import { ReactNode } from 'react';
 import Logo from './Logo';
 
 const Drawer = ({ children }: { children: ReactNode }) => {
-  const { isOpen, setIsOpen } = useDrawerContext();
+  const { isOpen, setIsOpen } = useNavContext();
 
   const drawer = {
-    hidden: { x: 0, transition: { duration: 0.2 } },
-    show: { x: 240, transition: { duration: 0.2 } },
+    closed: { x: 0, transition: { duration: 0.2 } },
+    open: { x: 240, transition: { duration: 0.2 } },
   };
 
   return (
-    <div className="drawer fixed inset-0 pointer-events-none z-[1000]">
+    <div className="drawer xl:hidden fixed inset-0 pointer-events-none z-[1000]">
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -29,7 +29,7 @@ const Drawer = ({ children }: { children: ReactNode }) => {
 
       <motion.div
         className="drawer-content-wrapper absolute -left-[var(--sidebar-width)] top-0 h-screen bg-darkPrimary w-[var(--sidebar-width)] z-[1000] pointer-events-auto"
-        animate={isOpen ? 'show' : 'hidden'}
+        animate={isOpen ? 'open' : 'closed'}
         variants={drawer}
       >
         <div className="h-[var(--header-height)] px-3 flex items-center">

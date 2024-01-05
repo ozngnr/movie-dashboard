@@ -1,48 +1,34 @@
 'use client';
 
-import { useContext, useEffect, useState } from 'react';
+import { useNavContext } from '@/context/navContext';
 import { Bars3Icon, UserCircleIcon } from '@heroicons/react/24/outline';
 import SearchBar from './SearchBar';
-import Drawer from './Drawer';
-import { usePathname } from 'next/navigation';
-import { useDrawerContext } from '@/context/drawerContext';
 import Logo from './Logo';
-import useScreenSize from '@/hooks/useScreenSize';
 
 const Header: React.FC = () => {
-  const pathname = usePathname();
-  const { isOpen, setIsOpen } = useDrawerContext();
-  const { width } = useScreenSize();
-
-  console.log(width);
-
-  const handleNavigation = () => {
-    return width > 1024 ? console.log('open mini guide') : setIsOpen(true);
-  };
-
-  useEffect(() => {
-    setIsOpen(false);
-  }, [setIsOpen, pathname]);
+  const { isOpen, setIsOpen } = useNavContext();
 
   return (
     <header
-      className={`flex-between sticky top-0 inset-x-0 h-[var(--header-height)] px-5 `}
+      className={`flex-between sticky top-0 inset-x-0 h-[var(--header-height)] px-5 z-[1000] bg-darkSecondary`}
     >
-      {/* Mobile Navigation */}
-      {/* <MobileNav isOpen={isOpen} setIsOpen={setIsOpen} /> */}
-      {/* <Drawer open={isOpen} setOpen={setIsOpen} /> */}
-
       <div className="flex">
-        <button className="mr-3" type="button" onClick={handleNavigation}>
+        <button
+          className="xl:hidden mr-3"
+          type="button"
+          onClick={() => setIsOpen(!isOpen)}
+        >
           <Bars3Icon width={30} />
         </button>
         <Logo />
       </div>
 
-      <SearchBar />
+      <div className="w-full max-w-[500px] mx-5">
+        <SearchBar />
+      </div>
 
-      <button type="button" className="w-8">
-        <UserCircleIcon />
+      <button type="button">
+        <UserCircleIcon width={32} />
       </button>
     </header>
   );
