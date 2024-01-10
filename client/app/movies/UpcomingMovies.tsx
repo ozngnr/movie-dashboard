@@ -37,11 +37,11 @@ export default async function UpcomingMovies() {
                   draggable="false"
                 >
                   <Image
-                    src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+                    src={`https://image.tmdb.org/t/p/w500${movie.backdrop_path}`}
                     alt={`${movie.title} poster`}
                     sizes="500px"
                     width={500}
-                    height={750}
+                    height={281}
                   />
                 </a>
               </div>
