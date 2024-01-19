@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { navLists } from '@/lib/navLists';
+import { navRoutes } from '@/lib/navRoutes';
 import { usePathname } from 'next/navigation';
 
 const Navbar = () => {
@@ -9,7 +9,7 @@ const Navbar = () => {
 
   return (
     <nav>
-      {navLists.map((list) => (
+      {navRoutes.map((list) => (
         <ul key={list.name} className="mt-5">
           {list.items.map((item) => (
             <li
@@ -24,7 +24,7 @@ const Navbar = () => {
               `}
             >
               <Link href={item.href} className="flex items-center">
-                <div className="w-[24px] mx-5">{item.icon}</div>
+                <span className="w-6 mx-5">{item.icon}</span>
                 {item.name}
               </Link>
             </li>

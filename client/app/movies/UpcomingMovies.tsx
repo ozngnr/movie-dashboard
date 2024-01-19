@@ -1,52 +1,78 @@
-import Carousel from '@/components/Carousel';
-import { getDate } from '@/lib/helpers';
-import { getUpcomingMovies } from '@/services/movieService';
-import { ChevronRightIcon } from '@heroicons/react/16/solid';
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from '@/components/ui/carousel';
+import { getMoviesWithGenres } from '@/services/movieService';
+import { ChevronRight, Star } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 
 export default async function UpcomingMovies() {
-  const { results: movies } = await getUpcomingMovies();
+  const movies = await getMoviesWithGenres('upcoming', 1);
 
   return (
-    <div>
-      <div className="flex-between">
+    <div className="mb-5">
+      <div className="flex-between mb-3">
         <h3>Upcoming</h3>
         <Link href={'/#'} className=" pt-1">
           See all{' '}
-          <ChevronRightIcon
-            width={16}
-            height={16}
+          <ChevronRight
+            strokeWidth={1.5}
+            size={18}
             style={{ display: 'inline-block' }}
           />
         </Link>
       </div>
 
       <div>
-        <Carousel>
-          {movies.map((movie: any) => (
-            <div key={movie.id}>
-              <div className="relative m-2 rounded-lg overflow-hidden [&:hover>div]:translate-y-0">
-                <div className="absolute inset-x-0 bottom-0 translate-y-[100%] bg-gradient-to-b from-transparent to-black pt-12 px-2 pb-3 transition-all">
-                  <h4 className="">{movie.title}</h4>
-                  <p>{getDate(movie.release_date)}</p>
+        <Carousel
+          opts={{
+            align: 'start',
+            loop: true,
+          }}
+        >
+          <CarouselContent>
+            {movies.slice(0, 10).map((movie: any) => (
+              <CarouselItem
+                key={movie.id}
+                className={`max-w-[70%] md:max-w-[60%]`}
+              >
+                <div className="relative rounded-lg overflow-hidden">
+                  <div className="absolute flex-between inset-x-0 bottom-0 bg-opacity-60 bg-gradient-to-b from-transparent to-black p-4 pt-10 uppercase ">
+                    <div>
+                      <h1 className="font-bold">{movie.title}</h1>
+                      <p>{movie.genres.join(', ')}</p>
+                    </div>
+                    <p className="flex w-max font-medium text-lightPrimary bg-darkSecondary bg-opacity-50 p-2 rounded-lg">
+                      {movie.vote_average.toFixed(1)}
+                      <span className="ml-1">
+                        <Star fill="gold" strokeWidth={0} size={20} />
+                      </span>
+                    </p>
+                  </div>
+                  <a
+                    href="#"
+                    className="before:content-[''] before:absolute before:inset-0"
+                    draggable="false"
+                  >
+                    <Image
+                      src={`https://image.tmdb.org/t/p/original${movie.backdrop_path}`}
+                      alt={`${movie.title} poster`}
+                      width={500}
+                      height={281}
+                      className="w-full"
+                      priority={true}
+                    />
+                  </a>
                 </div>
-                <a
-                  href="#"
-                  className="before:content-[''] before:absolute before:inset-0"
-                  draggable="false"
-                >
-                  <Image
-                    src={`https://image.tmdb.org/t/p/w500${movie.backdrop_path}`}
-                    alt={`${movie.title} poster`}
-                    sizes="500px"
-                    width={500}
-                    height={281}
-                  />
-                </a>
-              </div>
-            </div>
-          ))}
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+          {/* <CarouselPrevious />
+          <CarouselNext /> */}
         </Carousel>
       </div>
     </div>

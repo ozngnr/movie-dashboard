@@ -1,4 +1,4 @@
-import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
+import { Search } from 'lucide-react';
 
 const SearchBar = () => {
   return (
@@ -13,7 +13,7 @@ const SearchBar = () => {
         type="submit"
         className="absolute right-0 top-1/2 translate-y-[-50%] mr-2 p-1"
       >
-        <MagnifyingGlassIcon width={20} height={20} />
+        <Search strokeWidth={1.5} size={20} />
       </button>
     </div>
   );

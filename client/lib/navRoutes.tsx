@@ -1,29 +1,32 @@
-import { GlobeEuropeAfricaIcon } from '@heroicons/react/20/solid';
-import { ClockIcon, FilmIcon, HomeIcon } from '@heroicons/react/24/outline';
+import { AlarmClock, Compass, Home, LucideProps, Video } from 'lucide-react';
 
-export const navLists = [
+const iconProps: LucideProps = {
+  strokeWidth: 1.5,
+};
+
+export const navRoutes = [
   {
     name: 'Menu',
     items: [
       {
         name: 'Home',
         href: '/',
-        icon: <HomeIcon />,
+        icon: <Home {...iconProps} />,
       },
       {
         name: 'Discover',
         href: '/favourites',
-        icon: <GlobeEuropeAfricaIcon />,
+        icon: <Compass {...iconProps} />,
       },
       {
         name: 'Now Playing',
         href: '/now-playing',
-        icon: <FilmIcon />,
+        icon: <Video {...iconProps} />,
       },
       {
         name: 'Coming Soon',
         href: '/coming-soon',
-        icon: <ClockIcon />,
+        icon: <AlarmClock {...iconProps} />,
       },
     ],
   },

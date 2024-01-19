@@ -1,9 +1,9 @@
 'use client';
 
 import { useNavContext } from '@/context/navContext';
-import { Bars3Icon, UserCircleIcon } from '@heroicons/react/24/outline';
 import SearchBar from './SearchBar';
 import Logo from './Logo';
+import { Menu, User } from 'lucide-react';
 
 const Header: React.FC = () => {
   const { isOpen, setIsOpen } = useNavContext();
@@ -18,7 +18,7 @@ const Header: React.FC = () => {
           type="button"
           onClick={() => setIsOpen(!isOpen)}
         >
-          <Bars3Icon width={30} />
+          <Menu strokeWidth={1.5} size={28} />
         </button>
         <Logo />
       </div>
@@ -28,7 +28,7 @@ const Header: React.FC = () => {
       </div>
 
       <button type="button">
-        <UserCircleIcon width={32} />
+        <User strokeWidth={1.5} />
       </button>
     </header>
   );

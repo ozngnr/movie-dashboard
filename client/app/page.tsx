@@ -6,10 +6,10 @@ export default function Home() {
   return (
     <div className="min-h-screen px-5 py-3">
       <Suspense fallback={<h1>hello</h1>}>
-        <PopularMovies />
+        <UpcomingMovies />
       </Suspense>
       <Suspense fallback={<h1>hello</h1>}>
-        <UpcomingMovies />
+        <PopularMovies />
       </Suspense>
     </div>
   );
